@@ -1,0 +1,41 @@
+name: BusymateSDKExample
+options:
+  deploymentTarget:
+    iOS: '15.0'
+packages:
+  BusymateAI:
+    path: ..
+settings:
+  base:
+    SWIFT_VERSION: '5.0'
+    CODE_SIGNING_ALLOWED: NO
+    IPHONEOS_DEPLOYMENT_TARGET: '15.0'
+targets:
+  BusymateSDKExample:
+    type: application
+    platform: iOS
+    sources: [Sources]
+    dependencies:
+      - package: BusymateAI
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ai.busymate.sdk.example
+        INFOPLIST_FILE: Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+  BusymateSDKExampleTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [Tests]
+    dependencies:
+      - target: BusymateSDKExample
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ai.busymate.sdk.example.tests
+        GENERATE_INFOPLIST_FILE: YES
+schemes:
+  BusymateSDKExample:
+    build:
+      targets:
+        BusymateSDKExample: all
+    test:
+      targets: [BusymateSDKExampleTests]

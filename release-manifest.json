@@ -1,0 +1,16 @@
+{
+  "sdk": "Busymate AI ios",
+  "version": "1.0.0",
+  "identityWire": {
+    "legacy": 1,
+    "v2": 2,
+    "v2Build": "2.0.0"
+  },
+  "microphoneWire": 1,
+  "microphoneAdapter": "1.0.0",
+  "files": {
+    "Sources/BusymateAI/BusymateAI.swift": "2b8887aa1d6369e7e948e3040d153dd0d2cc8e5deee65016b06b2bf13b0ec98c",
+    "Sources/BusymateAI/BusymateMicrophone.swift": "a99ae81eb1ac2bf75d268724e94120e3953eb793a10321f16430d5c6594859a8",
+    "Sources/BusymateAI/BusymateBridge.swift": "ad538ce1f0a51140a5d7a5e100c27703d3f9595cdbb6164f15f8f615dd461ba9"
+  }
+}
