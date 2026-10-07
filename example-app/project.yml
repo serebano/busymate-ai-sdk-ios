@@ -1,5 +1,6 @@
 name: BusymateSDKExample
 options:
+  projectFormat: xcode15_0
   deploymentTarget:
     iOS: '15.0'
 packages:

@@ -1,4 +1,4 @@
-# Busymate AI SDK for iOS — 1.0.0
+# Busymate AI SDK for iOS — 1.0.1
 
 Official independent iOS source package for Busymate AI hosted chat. Install once in your app; hosted chat receives web updates independently.
 
@@ -8,10 +8,10 @@ In Xcode, File → Add Package Dependencies, use:
 
 `https://github.com/serebano/busymate-ai-sdk-ios.git`
 
-Choose **Exact Version 1.0.0** and add the `BusymateAI` product to your app target. Requires iOS 15+ and Swift tools 5.9+ (Swift 5 language mode). In a package manifest:
+Choose **Exact Version 1.0.1** and add the `BusymateAI` product to your app target. Requires iOS 15+ and Swift tools 5.9+ (Swift 5 language mode). In a package manifest:
 
 ```swift
-.package(url: "https://github.com/serebano/busymate-ai-sdk-ios.git", exact: "1.0.0")
+.package(url: "https://github.com/serebano/busymate-ai-sdk-ios.git", exact: "1.0.1")
 // In your target's dependencies:
 .product(name: "BusymateAI", package: "busymate-ai-sdk-ios")
 ```
@@ -37,6 +37,6 @@ The default guest chat is `https://busymate.ai/support/busyproxy?channel=ios&loc
 
 ## Versions and ownership
 
-Platform distribution 1.0.0 is distinct from identity wire 2/build 2.0.0 and microphone wire 1/adapter 1.0.0. [Release manifest](release-manifest.json) pins unchanged source hashes. This repository is canonical for iOS SDK releases. Official rendered developer documentation and verified artifact mirrors are hosted on [busymate.ai](https://busymate.ai/docs/guides/mobile-in-app-support). Frozen web/shared contracts remain owned by the hosted product; do not modify old native source bytes.
+Platform distribution 1.0.1 is distinct from identity wire 2/build 2.0.0 and microphone wire 1/adapter 1.0.0. [Release manifest](release-manifest.json) pins unchanged source hashes. This repository is canonical for iOS SDK releases. Official rendered developer documentation and verified artifact mirrors are hosted on [busymate.ai](https://busymate.ai/docs/guides/mobile-in-app-support). Frozen web/shared contracts remain owned by the hosted product; do not modify old native source bytes.
 
 Run `bash scripts/check-ios.sh` on an Xcode-equipped macOS host. This builds the package for iOS Simulator and typechecks the consumer sample. It does not certify physical OS permission dialogs, app-store publication or your backend integration. See [changelog](CHANGELOG.md) and [v2 wire contract](CONTRACT-v2.md).

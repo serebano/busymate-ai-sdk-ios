@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CD74EB26661BE77F5350FA4 /* redirect-fixture.py in Resources */ = {isa = PBXBuildFile; fileRef = EB1CAE68FE6A21BA8E74A70A /* redirect-fixture.py */; };
 		53551C5E974A27E4A39EE5D1 /* DemoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7317DA8133FE422428D394 /* DemoConfiguration.swift */; };
 		9325659972E3D66626A13DE6 /* DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901B72596EC08201643C6B6 /* DemoApp.swift */; };
 		B78939FF2832392CF51AF0E6 /* DemoSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40445EE4CF94F2536FCEFDED /* DemoSession.swift */; };
@@ -26,11 +27,12 @@
 
 /* Begin PBXFileReference section */
 		2901B72596EC08201643C6B6 /* DemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoApp.swift; sourceTree = "<group>"; };
-		305FF5F6849C23A87C5C4FFD /* official-sdk-ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "official-sdk-ios"; path = ..; sourceTree = SOURCE_ROOT; };
 		40445EE4CF94F2536FCEFDED /* DemoSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoSession.swift; sourceTree = "<group>"; };
 		581FD166DF169DD7725CAD3A /* BusymateSDKExampleTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = BusymateSDKExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A58C0493B48EFC9D870439C /* DemoConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoConfigurationTests.swift; sourceTree = "<group>"; };
+		A65F636A1FBD3CB4442B9B1F /* official-sdk-ios-1.0.1 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "official-sdk-ios-1.0.1"; path = ..; sourceTree = SOURCE_ROOT; };
 		E85A86DF1EE9462BD63D7ACF /* BusymateSDKExample.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BusymateSDKExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EB1CAE68FE6A21BA8E74A70A /* redirect-fixture.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = "redirect-fixture.py"; sourceTree = "<group>"; };
 		EE7317DA8133FE422428D394 /* DemoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -49,7 +51,7 @@
 		14BD14AE7E5B8D19C4AA518F /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				305FF5F6849C23A87C5C4FFD /* official-sdk-ios */,
+				A65F636A1FBD3CB4442B9B1F /* official-sdk-ios-1.0.1 */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -68,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				5A58C0493B48EFC9D870439C /* DemoConfigurationTests.swift */,
+				EB1CAE68FE6A21BA8E74A70A /* redirect-fixture.py */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -99,6 +102,7 @@
 			buildConfigurationList = 295B689BD3E1A55764A46FF1 /* Build configuration list for PBXNativeTarget "BusymateSDKExampleTests" */;
 			buildPhases = (
 				547B4767534A870C6102D026 /* Sources */,
+				A618C340EC11050AF7BC72D6 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -143,6 +147,7 @@
 				};
 			};
 			buildConfigurationList = FC4F8B0A7C2CE5AC2DA53DC3 /* Build configuration list for PBXProject "BusymateSDKExample" */;
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -154,7 +159,6 @@
 			packageReferences = (
 				DA94AC8BAC668674664008A5 /* XCLocalSwiftPackageReference ".." */,
 			);
-			preferredProjectObjectVersion = 77;
 			productRefGroup = 96AD9AD787ACF416E01CD1D9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -164,6 +168,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A618C340EC11050AF7BC72D6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CD74EB26661BE77F5350FA4 /* redirect-fixture.py in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1FEC7CCF04D2E0F098AA5899 /* Sources */ = {
