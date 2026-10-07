@@ -7,7 +7,13 @@ SDK implementations in the app.
 
 ## Build and open
 
-Use Xcode15+ with an iOS15+ target and a compatible installed simulator runtime.
+The committed project uses Xcode 15's project format (`objectVersion = 60`),
+explicitly selected by `projectFormat: xcode15_0` in the generator spec ([XcodeGen reference](https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md#options)).
+Use an iOS 15+ target and a compatible installed simulator runtime. Local build
+and shared configuration tests were actually validated with **Xcode 26.6,
+build 17F113**; a build with Xcode 15 itself has not been run. CI logs its exact
+Xcode/Swift toolchain versions. Project-format compatibility does not claim
+physical-device or every-toolchain certification.
 From the SDK repository root:
 
 ```sh

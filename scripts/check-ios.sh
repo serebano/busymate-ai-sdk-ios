@@ -1,5 +1,7 @@
 #!/bin/bash
 set -euo pipefail
+xcodebuild -version
+swift --version
 python3 scripts/verify-release.py
 swift package dump-package >/dev/null
 xcodebuild -scheme BusymateAI -destination 'generic/platform=iOS Simulator' -derivedDataPath .build-derived build CODE_SIGNING_ALLOWED=NO
