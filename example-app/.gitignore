@@ -1,0 +1,6 @@
+.derived-data/
+*.xcresult
+xcuserdata/
+
+.configuration-build/
+.swiftpm/

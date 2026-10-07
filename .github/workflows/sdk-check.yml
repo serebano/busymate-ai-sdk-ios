@@ -1,0 +1,15 @@
+name: SDK checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  sdk-check:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the package and importing sample
+        run: bash scripts/check-ios.sh
+      - name: Build the real example app
+        run: bash example-app/scripts/build.sh
+      - name: Test configuration and backend reply boundaries
+        run: bash example-app/scripts/test-config.sh
