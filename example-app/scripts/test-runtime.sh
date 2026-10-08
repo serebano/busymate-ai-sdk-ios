@@ -18,5 +18,5 @@ xcodebuild -version
 xcodebuild -project "$EXAMPLE_DIR/BusymateSDKExample.xcodeproj" \
   -scheme BusymateSDKExample -destination "platform=iOS Simulator,id=$SIM_ID" \
   -derivedDataPath "$EXAMPLE_DIR/.derived-data" -resultBundlePath "$RESULTS/runtime.xcresult" \
-  -only-testing:BusymateSDKExampleUITests -parallel-testing-enabled NO \
+  -only-testing:BusymateSDKExampleUITests/SDKRuntimeUITests -parallel-testing-enabled NO \
   -jobs 1 CODE_SIGNING_ALLOWED=NO test
