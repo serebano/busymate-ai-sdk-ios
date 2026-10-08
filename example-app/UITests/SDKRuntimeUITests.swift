@@ -30,6 +30,9 @@ final class SDKRuntimeUITests: XCTestCase {
     }
     func testReleasedDemoSettingsGuestRuntime() {
         XCTAssertTrue(app.webViews.firstMatch.waitForExistence(timeout: 30))
+        // Keep the initial chat visible through WebKit startup. A WebView
+        // shell alone does not prove the hosted page has rendered.
+        XCTAssertTrue(app.webViews.firstMatch.buttons["Start voice input"].waitForExistence(timeout: 90))
         noPermissionPrompt()
         snapshot("01-chat-open-no-permission-prompt")
         app.tabBars.buttons["Events"].tap()

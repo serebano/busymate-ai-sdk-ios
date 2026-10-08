@@ -14,6 +14,8 @@ read -r RUNTIME DEVICE_TYPE < <(xcrun simctl list devices available -j | python3
 SIM_ID=$(xcrun simctl create "Busymate SDK runtime $$" "$DEVICE_TYPE" "$RUNTIME")
 cleanup() { xcrun simctl shutdown "$SIM_ID" >/dev/null 2>&1 || true; xcrun simctl delete "$SIM_ID"; }
 trap cleanup EXIT
+xcrun simctl boot "$SIM_ID"
+xcrun simctl bootstatus "$SIM_ID" -b
 xcodebuild -version
 xcodebuild -project "$EXAMPLE_DIR/BusymateSDKExample.xcodeproj" \
   -scheme BusymateSDKExample -destination "platform=iOS Simulator,id=$SIM_ID" \
