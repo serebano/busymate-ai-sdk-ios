@@ -4,6 +4,7 @@
 build/
 local.properties
 .DS_Store
+example-app/.permission-results/
 .derived-data/
 .configuration-build/
 .runtime-results/

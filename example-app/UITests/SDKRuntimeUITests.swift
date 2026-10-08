@@ -71,3 +71,65 @@ final class SDKRuntimeUITests: XCTestCase {
         snapshot("07-background-foreground-no-permission-prompt")
     }
 }
+
+/// Only the gated permission script enables these tests. Each method runs in a
+/// separate invocation after resetting this disposable simulator's permission.
+final class FirstTapPermissionUITests: XCTestCase {
+    private let app = XCUIApplication(bundleIdentifier: "ai.busymate.sdk.example")
+    private let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+
+    override func setUpWithError() throws {
+        try XCTSkipUnless(ProcessInfo.processInfo.environment["BUSYMATE_PERMISSION_SUITE"] == "1",
+                          "Use the gated test-permissions.sh after the native hosted revision is live")
+        continueAfterFailure = false
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launch()
+    }
+    override func tearDown() {
+        if app.state != .notRunning {
+            attach("final-screen", XCUIScreen.main.screenshot())
+            // End any virtual media/session immediately; do not tap dictation
+            // Stop, which would submit audio for transcription.
+            app.terminate()
+        }
+    }
+    private func attach(_ name: String, _ screenshot: XCUIScreenshot) {
+        let attachment = XCTAttachment(screenshot: screenshot)
+        attachment.name = name
+        attachment.lifetime = .keepAlways
+        add(attachment)
+    }
+    private func firstTap(_ source: String, grant: Bool) {
+        let web = app.webViews.firstMatch
+        XCTAssertTrue(web.waitForExistence(timeout: 45))
+        let dictation = web.buttons["Start voice input"]
+        let voice = web.buttons["Enter voice mode"]
+        XCTAssertTrue(dictation.waitForExistence(timeout: 90), "Real hosted dictation must render")
+        XCTAssertTrue(voice.waitForExistence(timeout: 15), "Real hosted voice mode must render")
+        XCTAssertTrue(dictation.isHittable)
+        XCTAssertTrue(voice.isHittable)
+        XCTAssertEqual(app.alerts.count, 0, "Opening hosted chat must not request permission")
+        XCTAssertEqual(springboard.alerts.count, 0, "Opening hosted chat must not request OS permission")
+        attach("\(source)-visible-hosted-chat-before-tap-no-prompt", XCUIScreen.main.screenshot())
+        (source == "dictation" ? dictation : voice).tap()
+
+        let alert = springboard.alerts.firstMatch
+        XCTAssertTrue(alert.waitForExistence(timeout: 15), "First hosted tap must open the actual iOS dialog")
+        let text = alert.staticTexts.allElementsBoundByIndex.map { $0.label }.joined(separator: " ")
+        XCTAssertTrue(text.localizedCaseInsensitiveContains("microphone"), "Must be the microphone dialog: \(text)")
+        XCTAssertTrue(text.contains("Busymate SDK Demo"), "Must name this app, not a website: \(text)")
+        attach("\(source)-actual-ios-microphone-dialog", XCUIScreen.main.screenshot())
+        let accepted = grant ? ["Allow", "OK"] : ["Don't Allow", "Don’t Allow"]
+        let choice = alert.buttons.matching(NSPredicate(format: "label IN %@", accepted as NSArray)).firstMatch
+        XCTAssertTrue(choice.waitForExistence(timeout: 5))
+        choice.tap()
+        let dismissed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: alert)
+        XCTAssertEqual(XCTWaiter.wait(for: [dismissed], timeout: 5), .completed)
+        attach("\(source)-ios-\(grant ? "grant" : "deny")-chosen", XCUIScreen.main.screenshot())
+        app.terminate()
+    }
+    func testDictationGrant() { firstTap("dictation", grant: true) }
+    func testDictationDeny() { firstTap("dictation", grant: false) }
+    func testVoiceGrant() { firstTap("voice", grant: true) }
+    func testVoiceDeny() { firstTap("voice", grant: false) }
+}
