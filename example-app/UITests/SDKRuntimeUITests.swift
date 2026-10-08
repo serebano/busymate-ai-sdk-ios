@@ -40,9 +40,14 @@ final class SDKRuntimeUITests: XCTestCase {
         let mic = app.switches["Enable tap-triggered OS permission"]
         XCTAssertTrue(mic.waitForExistence(timeout: 5))
         XCTAssertEqual(mic.value as? String, "1")
+        scrollTo(mic)
         snapshot("03-sdk-settings-initial")
-        mic.tap()
-        XCTAssertEqual(mic.value as? String, "0")
+        // SwiftUI exposes the complete label row as the switch's hit region.
+        // Tap the trailing native thumb shown in the runtime screenshot.
+        mic.coordinate(withNormalizedOffset: CGVector(dx: 1, dy: 0.5))
+            .withOffset(CGVector(dx: -25, dy: 0)).tap()
+        let switchedOff = XCTNSPredicateExpectation(predicate: NSPredicate(format: "value == %@", "0"), object: mic)
+        XCTAssertEqual(XCTWaiter.wait(for: [switchedOff], timeout: 5), .completed)
         let apply = app.buttons["Apply and open chat"]
         scrollTo(apply)
         snapshot("04-sdk-lifecycle-controls")
