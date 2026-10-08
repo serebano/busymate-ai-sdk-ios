@@ -50,6 +50,17 @@
                ReferencedContainer = "container:BusymateSDKExample.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "516EC27E5AC8534A4DA0E9DF"
+               BuildableName = "BusymateSDKExampleUITests.xctest"
+               BlueprintName = "BusymateSDKExampleUITests"
+               ReferencedContainer = "container:BusymateSDKExample.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>

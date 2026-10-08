@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1CD74EB26661BE77F5350FA4 /* redirect-fixture.py in Resources */ = {isa = PBXBuildFile; fileRef = EB1CAE68FE6A21BA8E74A70A /* redirect-fixture.py */; };
+		43499BE3C96B5798189D4EC3 /* SDKRuntimeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF291774B424E4919B671B73 /* SDKRuntimeUITests.swift */; };
 		53551C5E974A27E4A39EE5D1 /* DemoConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE7317DA8133FE422428D394 /* DemoConfiguration.swift */; };
 		9325659972E3D66626A13DE6 /* DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901B72596EC08201643C6B6 /* DemoApp.swift */; };
 		B78939FF2832392CF51AF0E6 /* DemoSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40445EE4CF94F2536FCEFDED /* DemoSession.swift */; };
@@ -16,6 +17,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		390A281E5A5F5BEA1FFDEBF2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BE39E54B584F939B8ED71A71 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB88ADACFCD5A9A798676D65;
+			remoteInfo = BusymateSDKExample;
+		};
 		9B7A7E5AB34426A796F9D705 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BE39E54B584F939B8ED71A71 /* Project object */;
@@ -30,7 +38,9 @@
 		40445EE4CF94F2536FCEFDED /* DemoSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoSession.swift; sourceTree = "<group>"; };
 		581FD166DF169DD7725CAD3A /* BusymateSDKExampleTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = BusymateSDKExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A58C0493B48EFC9D870439C /* DemoConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoConfigurationTests.swift; sourceTree = "<group>"; };
-		A65F636A1FBD3CB4442B9B1F /* official-sdk-ios-1.0.1 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "official-sdk-ios-1.0.1"; path = ..; sourceTree = SOURCE_ROOT; };
+		D7D365FF644E6C5EF6F62BD6 /* sdk-ios-native-runtime */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "sdk-ios-native-runtime"; path = ..; sourceTree = SOURCE_ROOT; };
+		DDB1BC0CB6017C09091645F9 /* BusymateSDKExampleUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = BusymateSDKExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF291774B424E4919B671B73 /* SDKRuntimeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKRuntimeUITests.swift; sourceTree = "<group>"; };
 		E85A86DF1EE9462BD63D7ACF /* BusymateSDKExample.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = BusymateSDKExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB1CAE68FE6A21BA8E74A70A /* redirect-fixture.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = "redirect-fixture.py"; sourceTree = "<group>"; };
 		EE7317DA8133FE422428D394 /* DemoConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoConfiguration.swift; sourceTree = "<group>"; };
@@ -51,7 +61,7 @@
 		14BD14AE7E5B8D19C4AA518F /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				A65F636A1FBD3CB4442B9B1F /* official-sdk-ios-1.0.1 */,
+				D7D365FF644E6C5EF6F62BD6 /* sdk-ios-native-runtime */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -64,6 +74,14 @@
 				40445EE4CF94F2536FCEFDED /* DemoSession.swift */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		6EBFE3DFC59BE9EDC8ABFAD7 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				DF291774B424E4919B671B73 /* SDKRuntimeUITests.swift */,
+			);
+			path = UITests;
 			sourceTree = "<group>";
 		};
 		77FFD9C8551D76DF550632DE /* Tests */ = {
@@ -80,6 +98,7 @@
 			children = (
 				E85A86DF1EE9462BD63D7ACF /* BusymateSDKExample.app */,
 				581FD166DF169DD7725CAD3A /* BusymateSDKExampleTests.xctest */,
+				DDB1BC0CB6017C09091645F9 /* BusymateSDKExampleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -90,6 +109,7 @@
 				14BD14AE7E5B8D19C4AA518F /* Packages */,
 				68CB9B867BE617E13C317686 /* Sources */,
 				77FFD9C8551D76DF550632DE /* Tests */,
+				6EBFE3DFC59BE9EDC8ABFAD7 /* UITests */,
 				96AD9AD787ACF416E01CD1D9 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -97,6 +117,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		516EC27E5AC8534A4DA0E9DF /* BusymateSDKExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2606174E3F0F994B201EBBDA /* Build configuration list for PBXNativeTarget "BusymateSDKExampleUITests" */;
+			buildPhases = (
+				BC9F94288FC2EC92B990CC77 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6B910E2879AC395A6B07C00D /* PBXTargetDependency */,
+			);
+			name = BusymateSDKExampleUITests;
+			packageProductDependencies = (
+			);
+			productName = BusymateSDKExampleUITests;
+			productReference = DDB1BC0CB6017C09091645F9 /* BusymateSDKExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		ACB7477D8D04E7C1EB950B32 /* BusymateSDKExampleTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 295B689BD3E1A55764A46FF1 /* Build configuration list for PBXNativeTarget "BusymateSDKExampleTests" */;
@@ -144,6 +182,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					516EC27E5AC8534A4DA0E9DF = {
+						TestTargetID = CB88ADACFCD5A9A798676D65;
+					};
 				};
 			};
 			buildConfigurationList = FC4F8B0A7C2CE5AC2DA53DC3 /* Build configuration list for PBXProject "BusymateSDKExample" */;
@@ -165,6 +206,7 @@
 			targets = (
 				CB88ADACFCD5A9A798676D65 /* BusymateSDKExample */,
 				ACB7477D8D04E7C1EB950B32 /* BusymateSDKExampleTests */,
+				516EC27E5AC8534A4DA0E9DF /* BusymateSDKExampleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -199,9 +241,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BC9F94288FC2EC92B990CC77 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43499BE3C96B5798189D4EC3 /* SDKRuntimeUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		6B910E2879AC395A6B07C00D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB88ADACFCD5A9A798676D65 /* BusymateSDKExample */;
+			targetProxy = 390A281E5A5F5BEA1FFDEBF2 /* PBXContainerItemProxy */;
+		};
 		8E361FDE6B68B88DDEE72952 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CB88ADACFCD5A9A798676D65 /* BusymateSDKExample */;
@@ -224,6 +279,40 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BusymateSDKExample.app/BusymateSDKExample";
+			};
+			name = Debug;
+		};
+		435B74D35B672AC93EBBC5B7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ai.busymate.sdk.example.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BusymateSDKExample;
+			};
+			name = Release;
+		};
+		78042BF9AD4F7BE2306B5536 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ai.busymate.sdk.example.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BusymateSDKExample;
 			};
 			name = Debug;
 		};
@@ -402,6 +491,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2606174E3F0F994B201EBBDA /* Build configuration list for PBXNativeTarget "BusymateSDKExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				78042BF9AD4F7BE2306B5536 /* Debug */,
+				435B74D35B672AC93EBBC5B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		295B689BD3E1A55764A46FF1 /* Build configuration list for PBXNativeTarget "BusymateSDKExampleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

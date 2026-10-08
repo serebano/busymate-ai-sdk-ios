@@ -33,10 +33,20 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: ai.busymate.sdk.example.tests
         GENERATE_INFOPLIST_FILE: YES
+  BusymateSDKExampleUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [UITests]
+    dependencies:
+      - target: BusymateSDKExample
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ai.busymate.sdk.example.uitests
+        GENERATE_INFOPLIST_FILE: YES
 schemes:
   BusymateSDKExample:
     build:
       targets:
         BusymateSDKExample: all
     test:
-      targets: [BusymateSDKExampleTests]
+      targets: [BusymateSDKExampleTests, BusymateSDKExampleUITests]

@@ -124,3 +124,18 @@ retry, cancellation while permission is pending, background/foreground,
 renderer recovery, and reopening chat. Real authenticated service use, OS
 permission dialogs and audio playback/capture require your own device/backend
 verification.
+
+## Reproducible simulator runtime smoke
+
+Run `bash example-app/scripts/test-runtime.sh` with an installed iOS simulator
+runtime. The script creates and removes only its own simulator and retains the
+XCTest result bundle under `.runtime-results/`. CI runs the same command after
+building the real example and package.
+
+The UI test opens the actual hosted guest page, checks native installation/load
+events, applies microphone OFF, resets guest defaults, and resumes the app from
+the background. It asserts no system prompt appears during these actions and
+attaches screenshots. It sends no chat message and does not request or record
+audio. This is simulator smoke coverage, not first-tap grant/refusal, physical
+microphone/audio, or authenticated-backend certification. Those acceptance cases
+still require the device checklist and a deployment supporting microphone events.
