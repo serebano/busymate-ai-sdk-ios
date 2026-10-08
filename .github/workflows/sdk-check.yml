@@ -1,5 +1,10 @@
 name: SDK checks
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+    tags: ['*']
+  pull_request:
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -13,3 +18,11 @@ jobs:
         run: bash example-app/scripts/build.sh
       - name: Test configuration and backend reply boundaries
         run: bash example-app/scripts/test-config.sh
+      - name: Run actual demo on an isolated iOS Simulator
+        run: bash example-app/scripts/test-runtime.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ios-native-runtime-results
+          path: example-app/.runtime-results/
+          retention-days: 7

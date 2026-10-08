@@ -6,3 +6,4 @@ local.properties
 .DS_Store
 .derived-data/
 .configuration-build/
+.runtime-results/
