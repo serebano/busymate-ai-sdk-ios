@@ -7,9 +7,10 @@ if [[ -e "$RESULTS/runtime.xcresult" ]]; then
   echo 'Existing runtime.xcresult preserved. Move it before running again.' >&2
   exit 1
 fi
-RUNTIME=$(xcrun simctl list runtimes -j | python3 -c 'import sys,json; r=[x["identifier"] for x in json.load(sys.stdin)["runtimes"] if x.get("isAvailable") and x.get("platform")=="iOS"]; print(r[-1] if r else "")')
-DEVICE_TYPE=$(xcrun simctl list devicetypes -j | python3 -c 'import sys,json; d=[x["identifier"] for x in json.load(sys.stdin)["devicetypes"] if x.get("productFamily")=="iPhone"]; print(d[-1] if d else "")')
-[[ -n "$RUNTIME" && -n "$DEVICE_TYPE" ]] || { echo 'An installed iOS runtime and iPhone device type are required.' >&2; exit 1; }
+# Select the model/runtime pair of an available existing iPhone; the global
+# device-type list also contains models incompatible with an installed runtime.
+read -r RUNTIME DEVICE_TYPE < <(xcrun simctl list devices available -j | python3 -c 'import sys,json; pairs=[(runtime,d["deviceTypeIdentifier"]) for runtime,devices in json.load(sys.stdin)["devices"].items() for d in devices if d.get("isAvailable") and "iPhone" in d.get("deviceTypeIdentifier", "")]; print(" ".join(pairs[-1]) if pairs else "")')
+[[ -n "$RUNTIME" && -n "$DEVICE_TYPE" ]] || { echo 'An available iPhone simulator and installed runtime are required.' >&2; exit 1; }
 SIM_ID=$(xcrun simctl create "Busymate SDK runtime $$" "$DEVICE_TYPE" "$RUNTIME")
 cleanup() { xcrun simctl shutdown "$SIM_ID" >/dev/null 2>&1 || true; xcrun simctl delete "$SIM_ID"; }
 trap cleanup EXIT
