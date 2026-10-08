@@ -24,5 +24,6 @@ jobs:
         if: always()
         with:
           name: ios-native-runtime-results
+          include-hidden-files: true
           path: example-app/.runtime-results/
           retention-days: 7
