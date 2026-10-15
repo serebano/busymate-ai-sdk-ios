@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Busymate AI SDK for iOS</title>
+<meta name="description" content="Busymate AI hosted chat inside your iOS app: a WKWebView host with the frozen identity bridge and a tap-triggered microphone adapter.">
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Crect width='1024' height='1024' rx='224' fill='%23141413'/%3E%3Cg transform='translate(-233.745 -234.382) scale(1.45636)'%3E%3Cg transform='translate(59.796 -13.688) scale(1.02774)'%3E%3Cg transform='translate(512 256) skewX(-12)'%3E%3Cg fill='none' stroke='%23fff' stroke-width='70' stroke-linejoin='round'%3E%3Cg transform='translate(-46.5 0) scale(-1 1)'%3E%3Cpath d='M0 0 V512'/%3E%3Cpath d='M0 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H0'/%3E%3Cpath transform='translate(0 256)' d='M0 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H0'/%3E%3C/g%3E%3Cg transform='translate(11.5 0)'%3E%3Cpath d='M35 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H35'/%3E%3Cpath transform='translate(0 256)' d='M35 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H35'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E">
+<style>
+:root{color-scheme:light dark;--bg:#ffffff;--fg:#0a0a0a;--muted:#6e6e6e;--border:#e5e5e5;--surface:#f5f5f5;--raised:#ffffff;--accent:#171717;--accent-fg:#fafafa;--code:#f5f5f5;--shadow:0 1px 2px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.06);--font:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0a0a0a;--fg:#fafafa;--muted:#a3a3a3;--border:rgba(255,255,255,.1);--surface:#171717;--raised:#171717;--accent:#e5e5e5;--accent-fg:#171717;--code:#171717;--shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.4)}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--font);letter-spacing:-.005em}
+a{color:inherit;text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+header.top{position:sticky;top:0;z-index:2;background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--border)}
+header.top .wrap{display:flex;align-items:center;gap:12px;min-height:56px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em}
+.mark{width:22px;height:22px;display:block}
+.brand small{color:var(--muted);font-weight:500}
+nav.links{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+nav.links a{font-size:14px;padding:6px 10px;border-radius:8px;color:var(--muted)}
+nav.links a:hover{color:var(--fg);background:var(--surface);text-decoration:none}
+.hero{padding:56px 0 28px}
+.hero h1{font-size:clamp(30px,5vw,44px);line-height:1.1;letter-spacing:-.035em;font-weight:600;margin:0 0 14px;text-wrap:balance}
+.hero p.lead{font-size:18px;color:var(--muted);max-width:62ch;margin:0 0 18px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 22px}
+.version{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px;background:var(--accent);color:var(--accent-fg);padding:6px 12px;border-radius:999px}
+.version .dot{width:7px;height:7px;border-radius:50%;background:#34c759}
+.chip{display:inline-flex;align-items:center;font-size:13px;color:var(--muted);border:1px solid var(--border);padding:5px 10px;border-radius:999px;font-family:var(--mono);letter-spacing:0}
+.cta{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:var(--raised);font-weight:500;font-size:15px}
+.btn:hover{text-decoration:none;background:var(--surface)}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:transparent}
+.btn.primary:hover{opacity:.9}
+section{padding:36px 0;border-top:1px solid var(--border)}
+h2{font-size:24px;letter-spacing:-.025em;font-weight:600;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 22px;max-width:70ch}
+.gallery{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.gallery.phones{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+figure.shot{margin:0;display:flex;flex-direction:column;gap:10px}
+figure.shot a{display:block;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--surface);box-shadow:var(--shadow)}
+figure.shot img{display:block;width:100%;height:auto}
+figure.shot.portrait a{border-radius:22px}
+figcaption{font-size:14px;color:var(--muted);line-height:1.45}
+.credit{font-size:13px;color:var(--muted);margin:18px 0 0}
+.pending{border:1px dashed var(--border);border-radius:14px;padding:28px;text-align:center;color:var(--muted)}
+.pending-title{font-weight:600;color:var(--fg);margin:0 0 6px;font-size:18px}
+.pending p{margin:0;max-width:60ch;margin-inline:auto}
+ol.steps{padding-left:0;margin:0;list-style:none;counter-reset:s;display:grid;gap:18px}
+ol.steps li{counter-increment:s;position:relative;padding-left:44px}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600}
+ol.steps p{margin:0 0 10px}
+pre{margin:0;background:var(--code);border:1px solid var(--border);border-radius:12px;padding:14px 16px;overflow:auto;font:13.5px/1.55 var(--mono);letter-spacing:0;-webkit-overflow-scrolling:touch}
+code{font-family:var(--mono);font-size:.92em;letter-spacing:0}
+p code,li code{background:var(--code);border:1px solid var(--border);border-radius:6px;padding:1px 6px}
+.cards{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{border:1px solid var(--border);border-radius:14px;padding:20px 22px;background:var(--raised)}
+.card h3{margin:0 0 8px;font-size:17px;letter-spacing:-.015em}
+.card p{margin:0 0 10px;color:var(--muted);font-size:15px}
+.card p:last-child{margin:0}
+.card strong{color:var(--fg);font-weight:600}
+ul.linklist{list-style:none;padding:0;margin:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+ul.linklist a{display:block;border:1px solid var(--border);border-radius:12px;padding:14px 16px;background:var(--raised)}
+ul.linklist a:hover{background:var(--surface);text-decoration:none}
+ul.linklist span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+footer{padding:28px 0 48px;color:var(--muted);font-size:13px;border-top:1px solid var(--border)}
+footer .wrap{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+@media (max-width:640px){.hero{padding:36px 0 22px}section{padding:28px 0}nav.links a{padding:6px 8px}}
+@media (prefers-reduced-motion:no-preference){figure.shot a{transition:transform .15s ease}figure.shot a:hover{transform:translateY(-2px)}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="https://busymate.ai" aria-label="Busymate AI"><svg class="mark" viewBox="0 0 1024 1024" aria-hidden="true" focusable="false"><g transform="translate(-233.745 -234.382) scale(1.45636)"><g transform="translate(59.796 -13.688) scale(1.02774)"><g transform="translate(512 256) skewX(-12)"><g fill="none" stroke="currentColor" stroke-width="70" stroke-linecap="butt" stroke-linejoin="round"><g transform="translate(-46.5 0) scale(-1 1)"><path stroke-linecap="square" d="M0 0 V512"/><path d="M0 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H0"/><path transform="translate(0 256)" d="M0 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H0"/></g><g transform="translate(11.5 0)"><path d="M35 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H35"/><path transform="translate(0 256)" d="M35 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H35"/></g></g></g></g></g></svg><span>Busymate AI <small>· SDK for iOS</small></span></a>
+  <nav class="links" aria-label="Links"><a href="https://github.com/serebano/busymate-ai-sdk-ios">Repository</a><a href="https://github.com/serebano/busymate-ai-sdk-ios/releases/tag/1.0.1">Release 1.0.1</a><a href="https://busymate.ai/docs/guides/ios-sdk">Guide</a></nav>
+</div></header>
+
+<main class="wrap">
+<div class="hero">
+  <h1>Busymate AI SDK for iOS</h1>
+  <p class="lead">Busymate AI hosted chat inside your iOS app: a WKWebView host with the frozen identity bridge and a tap-triggered microphone adapter.</p>
+  <div class="badges"><span class="version"><span class="dot"></span>Version 1.0.1</span><span class="chip">identity wire v2 · build 2.0.0</span><span class="chip">microphone adapter 1.0.0</span><span class="chip">iOS 15+ · Swift tools 5.9+</span></div>
+  <div class="cta"><a class="btn primary" href="https://busymate.ai/docs/guides/ios-sdk">Integration guide</a><a class="btn" href="https://github.com/serebano/busymate-ai-sdk-ios/releases/tag/1.0.1">Download 1.0.1</a><a class="btn" href="https://github.com/serebano/busymate-ai-sdk-ios">Source on GitHub</a></div>
+</div>
+
+<section id="what">
+  <h2>What it does</h2>
+  <p class="sub">An independent Swift package for iOS. BusymateBridge answers the hosted chat's identity requests from your app (identity wire v2, immutable build 2.0.0); BusymateMicrophone asks iOS for microphone access only when the user taps the chat's microphone or voice control (adapter 1.0.0). Existing v1 integrations can keep BusymateAIWebViewBridge; do not install both identity handlers on one chat.</p>
+  <div class="cards"><div class="card"><h3>Hosted chat in WKWebView</h3><p>Load your workspace's chat URL with channel=ios. Hosted chat updates ship independently of your App Store release.</p></div><div class="card"><h3>Identity bridge v2</h3><p>Your app supplies the current account and mints fresh assertions from your own backend; renderer termination and foreground resume are handled.</p></div><div class="card"><h3>Microphone on tap</h3><p>No OS prompt merely on opening chat. Only an OS grant plus an allowed-origin WebKit media grant permits recording.</p></div></div>
+</section>
+
+<section id="screenshots">
+  <h2>Example app</h2>
+  <p class="sub">The example app (BusymateSDKExample) consumes this SDK as a local Swift package, with Chat, Settings and Events tabs.</p>
+  <div class="pending"><p class="pending-title">Screenshots coming soon</p><p>A signed device build of the example app is ready, but the iPhone install path of the device farm was unavailable during this capture run. Real iPhone screenshots follow as soon as it is back.</p></div>
+</section>
+
+<section id="install">
+  <h2>Install</h2>
+  <p class="sub">Install with Swift Package Manager and pin the exact version.</p>
+  <ol class="steps"><li><p>In Xcode choose File → Add Package Dependencies and enter the repository URL. Select <strong>Exact Version 1.0.1</strong> and add the <code>BusymateAI</code> product to your app target.</p><pre><code>https://github.com/serebano/busymate-ai-sdk-ios.git</code></pre></li>
+<li><p>Or declare it in a package manifest.</p><pre><code>.package(url: &quot;https://github.com/serebano/busymate-ai-sdk-ios.git&quot;, exact: &quot;1.0.1&quot;)
+// In your target's dependencies:
+.product(name: &quot;BusymateAI&quot;, package: &quot;busymate-ai-sdk-ios&quot;)</code></pre></li>
+<li><p><code>import BusymateAI</code>, install <code>BusymateBridge</code> and <code>BusymateMicrophone</code> before loading your tenant's HTTPS chat URL, forward WebKit's media permission, and add a localized <code>NSMicrophoneUsageDescription</code> to your Info.plist.</p></li></ol>
+</section>
+
+<section id="identity">
+  <h2>Identity linking and the microphone</h2>
+  <p class="sub">Both bridges are installed by your app before the chat's first load. Your native app release is what installs or upgrades native SDK code; the hosted chat updates independently.</p>
+  <div class="cards">
+    <div class="card"><h3>Identity linking</h3><p><strong>BusymateBridge</strong> (wire v2, build 2.0.0) asks your app for the current account and for a fresh single-use assertion minted by your authenticated backend. External HTTPS opens stay OS-owned, with an optional ASWebAuthenticationSession callback scheme. Read <a href="https://github.com/serebano/busymate-ai-sdk-ios/blob/main/docs/identity.md">identity.md</a>.</p></div>
+    <div class="card"><h3>Microphone</h3><p><strong>BusymateMicrophone</strong> (wire 1, adapter 1.0.0) requests iOS microphone permission only on the user's tap; denial offers Retry, revoked permission is rechecked, and a cancelled chat cannot start capture after a late reply. Read <a href="https://github.com/serebano/busymate-ai-sdk-ios/blob/main/docs/microphone.md">microphone.md</a>.</p></div>
+  </div>
+</section>
+
+<section id="links">
+  <h2>Links</h2>
+  <ul class="linklist">
+    <li><a href="https://github.com/serebano/busymate-ai-sdk-ios">serebano/busymate-ai-sdk-ios<span>Source, example app, docs, changelog</span></a></li>
+    <li><a href="https://github.com/serebano/busymate-ai-sdk-ios/releases/tag/1.0.1">Release 1.0.1<span>Tagged, versioned artifacts</span></a></li>
+    <li><a href="https://busymate.ai/docs/guides/ios-sdk">busymate.ai/docs/guides/ios-sdk<span>Step-by-step integration guide</span></a></li>
+    <li><a href="https://github.com/serebano/busymate-ai-sdk-ios/blob/main/CHANGELOG.md">Changelog<span>What changed in 1.0.1</span></a></li>
+    <li><a href="https://github.com/serebano/busymate-ai-sdk-ios/blob/main/CONTRACT-v2.md">Identity wire contract v2<span>Frozen bridge build 2.0.0</span></a></li>
+    <li><a href="https://busymate.ai/docs/guides/app-bridge-v2">Identity bridge compatibility<span>Across every Busymate AI SDK</span></a></li>
+  </ul>
+</section>
+</main>
+
+<footer><div class="wrap"><span>© Busymate AI · Official SDK for iOS 1.0.1</span><span>Static page. No scripts, no cookies, no tracking.</span></div></footer>
+</body>
+</html>
