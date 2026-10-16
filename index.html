@@ -77,15 +77,15 @@ footer .wrap{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;
 <body>
 <header class="top"><div class="wrap">
   <a class="brand" href="https://busymate.ai" aria-label="Busymate AI"><svg class="mark" viewBox="0 0 1024 1024" aria-hidden="true" focusable="false"><g transform="translate(-233.745 -234.382) scale(1.45636)"><g transform="translate(59.796 -13.688) scale(1.02774)"><g transform="translate(512 256) skewX(-12)"><g fill="none" stroke="currentColor" stroke-width="70" stroke-linecap="butt" stroke-linejoin="round"><g transform="translate(-46.5 0) scale(-1 1)"><path stroke-linecap="square" d="M0 0 V512"/><path d="M0 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H0"/><path transform="translate(0 256)" d="M0 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H0"/></g><g transform="translate(11.5 0)"><path d="M35 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H35"/><path transform="translate(0 256)" d="M35 0 H132 Q240 0 240 96 V160 Q240 256 132 256 H35"/></g></g></g></g></g></svg><span>Busymate AI <small>· SDK for iOS</small></span></a>
-  <nav class="links" aria-label="Links"><a href="https://github.com/serebano/busymate-ai-sdk-ios">Repository</a><a href="https://github.com/serebano/busymate-ai-sdk-ios/releases/tag/1.0.1">Release 1.0.1</a><a href="https://busymate.ai/docs/guides/ios-sdk">Guide</a></nav>
+  <nav class="links" aria-label="Links"><a href="https://github.com/serebano/busymate-ai-sdk-ios">Repository</a><a href="https://github.com/serebano/busymate-ai-sdk-ios/releases/tag/1.0.2">Release 1.0.2</a><a href="https://busymate.ai/docs/guides/ios-sdk">Guide</a></nav>
 </div></header>
 
 <main class="wrap">
 <div class="hero">
   <h1>Busymate AI SDK for iOS</h1>
   <p class="lead">Busymate AI hosted chat inside your iOS app: a WKWebView host with the frozen identity bridge and a tap-triggered microphone adapter.</p>
-  <div class="badges"><span class="version"><span class="dot"></span>Version 1.0.1</span><span class="chip">identity wire v2 · build 2.0.0</span><span class="chip">microphone adapter 1.0.0</span><span class="chip">iOS 15+ · Swift tools 5.9+</span></div>
-  <div class="cta"><a class="btn primary" href="https://busymate.ai/docs/guides/ios-sdk">Integration guide</a><a class="btn" href="https://github.com/serebano/busymate-ai-sdk-ios/releases/tag/1.0.1">Download 1.0.1</a><a class="btn" href="https://github.com/serebano/busymate-ai-sdk-ios">Source on GitHub</a></div>
+  <div class="badges"><span class="version"><span class="dot"></span>Version 1.0.2</span><span class="chip">identity wire v2 · build 2.0.0</span><span class="chip">microphone adapter 1.0.0</span><span class="chip">iOS 15+ · Swift tools 5.9+</span></div>
+  <div class="cta"><a class="btn primary" href="https://busymate.ai/docs/guides/ios-sdk">Integration guide</a><a class="btn" href="https://github.com/serebano/busymate-ai-sdk-ios/releases/tag/1.0.2">Download 1.0.2</a><a class="btn" href="https://github.com/serebano/busymate-ai-sdk-ios">Source on GitHub</a></div>
 </div>
 
 <section id="what">
@@ -103,8 +103,8 @@ footer .wrap{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;
 <section id="install">
   <h2>Install</h2>
   <p class="sub">Install with Swift Package Manager and pin the exact version.</p>
-  <ol class="steps"><li><p>In Xcode choose File → Add Package Dependencies and enter the repository URL. Select <strong>Exact Version 1.0.1</strong> and add the <code>BusymateAI</code> product to your app target.</p><pre><code>https://github.com/serebano/busymate-ai-sdk-ios.git</code></pre></li>
-<li><p>Or declare it in a package manifest.</p><pre><code>.package(url: &quot;https://github.com/serebano/busymate-ai-sdk-ios.git&quot;, exact: &quot;1.0.1&quot;)
+  <ol class="steps"><li><p>In Xcode choose File → Add Package Dependencies and enter the repository URL. Select <strong>Exact Version 1.0.2</strong> and add the <code>BusymateAI</code> product to your app target.</p><pre><code>https://github.com/serebano/busymate-ai-sdk-ios.git</code></pre></li>
+<li><p>Or declare it in a package manifest.</p><pre><code>.package(url: &quot;https://github.com/serebano/busymate-ai-sdk-ios.git&quot;, exact: &quot;1.0.2&quot;)
 // In your target's dependencies:
 .product(name: &quot;BusymateAI&quot;, package: &quot;busymate-ai-sdk-ios&quot;)</code></pre></li>
 <li><p><code>import BusymateAI</code>, install <code>BusymateBridge</code> and <code>BusymateMicrophone</code> before loading your tenant's HTTPS chat URL, forward WebKit's media permission, and add a localized <code>NSMicrophoneUsageDescription</code> to your Info.plist.</p></li></ol>
@@ -115,7 +115,7 @@ footer .wrap{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;
   <p class="sub">Both bridges are installed by your app before the chat's first load. Your native app release is what installs or upgrades native SDK code; the hosted chat updates independently.</p>
   <div class="cards">
     <div class="card"><h3>Identity linking</h3><p><strong>BusymateBridge</strong> (wire v2, build 2.0.0) asks your app for the current account and for a fresh single-use assertion minted by your authenticated backend. External HTTPS opens stay OS-owned, with an optional ASWebAuthenticationSession callback scheme. Read <a href="https://github.com/serebano/busymate-ai-sdk-ios/blob/main/docs/identity.md">identity.md</a>.</p></div>
-    <div class="card"><h3>Microphone</h3><p><strong>BusymateMicrophone</strong> (wire 1, adapter 1.0.0) requests iOS microphone permission only on the user's tap; denial offers Retry, revoked permission is rechecked, and a cancelled chat cannot start capture after a late reply. Read <a href="https://github.com/serebano/busymate-ai-sdk-ios/blob/main/docs/microphone.md">microphone.md</a>.</p></div>
+    <div class="card"><h3>Microphone</h3><p><strong>BusymateMicrophone</strong> (wire 1, adapter 1.0.0) requests iOS microphone permission only on the user's tap; denial offers Retry, revoked permission is rechecked, and a cancelled chat cannot start capture after a late reply. Read <a href="https://github.com/serebano/busymate-ai-sdk-ios/blob/main/docs/microphone.md">microphone.md</a>. Download the adapter: <a href="https://github.com/serebano/busymate-ai-sdk-ios/releases/latest/download/BusymateMicrophone.swift">latest release</a> · <a href="https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.2/BusymateMicrophone.swift">pinned 1.0.2</a> · <a href="https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.2/SHA256SUMS">SHA256SUMS</a>.</p></div>
   </div>
 </section>
 
@@ -123,15 +123,17 @@ footer .wrap{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;
   <h2>Links</h2>
   <ul class="linklist">
     <li><a href="https://github.com/serebano/busymate-ai-sdk-ios">serebano/busymate-ai-sdk-ios<span>Source, example app, docs, changelog</span></a></li>
-    <li><a href="https://github.com/serebano/busymate-ai-sdk-ios/releases/tag/1.0.1">Release 1.0.1<span>Tagged, versioned artifacts</span></a></li>
+    <li><a href="https://github.com/serebano/busymate-ai-sdk-ios/releases/tag/1.0.2">Release 1.0.2<span>Tagged, versioned artifacts</span></a></li>
+    <li><a href="https://github.com/serebano/busymate-ai-sdk-ios/releases/latest/download/BusymateMicrophone.swift">BusymateMicrophone.swift<span>Microphone adapter 1.0.0, latest release</span></a></li>
+    <li><a href="https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.2/SHA256SUMS">SHA256SUMS<span>Checksums for every 1.0.2 asset</span></a></li>
     <li><a href="https://busymate.ai/docs/guides/ios-sdk">busymate.ai/docs/guides/ios-sdk<span>Step-by-step integration guide</span></a></li>
-    <li><a href="https://github.com/serebano/busymate-ai-sdk-ios/blob/main/CHANGELOG.md">Changelog<span>What changed in 1.0.1</span></a></li>
+    <li><a href="https://github.com/serebano/busymate-ai-sdk-ios/blob/main/CHANGELOG.md">Changelog<span>What changed in 1.0.2</span></a></li>
     <li><a href="https://github.com/serebano/busymate-ai-sdk-ios/blob/main/CONTRACT-v2.md">Identity wire contract v2<span>Frozen bridge build 2.0.0</span></a></li>
     <li><a href="https://busymate.ai/docs/guides/app-bridge-v2">Identity bridge compatibility<span>Across every Busymate AI SDK</span></a></li>
   </ul>
 </section>
 </main>
 
-<footer><div class="wrap"><span>© Busymate AI · Official SDK for iOS 1.0.1</span><span>Static page. No scripts, no cookies, no tracking.</span></div></footer>
+<footer><div class="wrap"><span>© Busymate AI · Official SDK for iOS 1.0.2</span><span>Static page. No scripts, no cookies, no tracking.</span></div></footer>
 </body>
 </html>
