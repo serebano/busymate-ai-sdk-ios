@@ -1,4 +1,4 @@
-# Busymate AI SDK for iOS — 1.0.1
+# Busymate AI SDK for iOS — 1.0.2
 
 Official independent iOS source package for Busymate AI hosted chat. Install once in your app; hosted chat receives web updates independently.
 
@@ -8,10 +8,10 @@ In Xcode, File → Add Package Dependencies, use:
 
 `https://github.com/serebano/busymate-ai-sdk-ios.git`
 
-Choose **Exact Version 1.0.1** and add the `BusymateAI` product to your app target. Requires iOS 15+ and Swift tools 5.9+ (Swift 5 language mode). In a package manifest:
+Choose **Exact Version 1.0.2** and add the `BusymateAI` product to your app target. Requires iOS 15+ and Swift tools 5.9+ (Swift 5 language mode). In a package manifest:
 
 ```swift
-.package(url: "https://github.com/serebano/busymate-ai-sdk-ios.git", exact: "1.0.1")
+.package(url: "https://github.com/serebano/busymate-ai-sdk-ios.git", exact: "1.0.2")
 // In your target's dependencies:
 .product(name: "BusymateAI", package: "busymate-ai-sdk-ios")
 ```
@@ -35,8 +35,22 @@ Open `example-app/BusymateSDKExample.xcodeproj`, select `BusymateSDKExample` and
 
 The default guest chat is `https://busymate.ai/support/busyproxy?channel=ios&locale=en`. Your workspace owns hosted voice/history/knowledge/tools/handoff availability; native configuration does not fabricate backend capabilities or authenticate merely from an account ID.
 
+## Download the adapter
+
+`BusymateMicrophone.swift` (microphone adapter 1.0.0, wire 1) ships in this SDK and is attached to every GitHub release, with `SHA256SUMS`:
+
+- Latest release: https://github.com/serebano/busymate-ai-sdk-ios/releases/latest/download/BusymateMicrophone.swift
+- Pinned, SDK 1.0.2: https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.2/BusymateMicrophone.swift
+- Checksums: https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.2/SHA256SUMS (`shasum -a 256 -c SHA256SUMS --ignore-missing`)
+
+This repository and its releases are the only source of the adapter. busymate.ai no longer publishes adapter copies; its legacy `https://busymate.ai/sdk/microphone/1.0.0/` files stay frozen for existing integrations.
+
 ## Versions and ownership
 
-Platform distribution 1.0.1 is distinct from identity wire 2/build 2.0.0 and microphone wire 1/adapter 1.0.0. [Release manifest](release-manifest.json) pins unchanged source hashes. This repository is canonical for iOS SDK releases. Official rendered developer documentation and verified artifact mirrors are hosted on [busymate.ai](https://busymate.ai/docs/guides/mobile-in-app-support). Frozen web/shared contracts remain owned by the hosted product; do not modify old native source bytes.
+Platform distribution 1.0.2 is distinct from identity wire 2/build 2.0.0 and microphone wire 1/adapter 1.0.0. [Release manifest](release-manifest.json) pins unchanged source hashes. This repository is canonical for iOS SDK releases. Official rendered developer documentation is hosted on [busymate.ai](https://busymate.ai/docs/guides/mobile-in-app-support). Frozen web/shared contracts remain owned by the hosted product; do not modify old native source bytes.
 
 Run `bash scripts/check-ios.sh` on an Xcode-equipped macOS host. This builds the package for iOS Simulator and typechecks the consumer sample. It does not certify physical OS permission dialogs, app-store publication or your backend integration. See [changelog](CHANGELOG.md) and [v2 wire contract](CONTRACT-v2.md).
+
+## Release process
+
+Every release attaches each `adapterAssets` file from [release-manifest.json](release-manifest.json) under its basename (`BusymateMicrophone.swift`) plus `SHA256SUMS` covering every attached asset. `python3 scripts/verify-release.py` checks the manifest version, the pinned source hashes and the adapter asset list.

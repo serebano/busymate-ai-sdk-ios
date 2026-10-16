@@ -1,4 +1,4 @@
-# Native microphone integration for iOS and Android — adapter 1.0.0
+# Native microphone integration for iOS and Android — adapter 1.0.0 (iOS) / 1.0.1 (Android)
 
 This guide adds microphone permission requests to a hosted chat in your native app.
 A user taps the chat microphone or voice button; the chat sends an event to the
@@ -7,12 +7,22 @@ capture only after permission is granted. No separate native permission button
 is needed. The OS decides whether a prompt is shown: an existing grant starts
 immediately; a previous refusal can require the user to change app Settings.
 
+## Download the adapter
+
+`BusymateMicrophone.swift` (microphone adapter 1.0.0, wire 1) ships in this SDK and is attached to every GitHub release, with `SHA256SUMS`:
+
+- Latest release: https://github.com/serebano/busymate-ai-sdk-ios/releases/latest/download/BusymateMicrophone.swift
+- Pinned, SDK 1.0.2: https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.2/BusymateMicrophone.swift
+- Checksums: https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.2/SHA256SUMS (`shasum -a 256 -c SHA256SUMS --ignore-missing`)
+
+This repository and its releases are the only source of the adapter. busymate.ai no longer publishes adapter copies; its legacy `https://busymate.ai/sdk/microphone/1.0.0/` files stay frozen for existing integrations.
+
 ## Before you integrate
 
 - Keep your existing identity bridge and authentication flow. This optional
   adapter works with either identity bridge; the immutable kit v2 files stay unchanged.
-- Download [the Swift adapter](https://busymate.ai/sdk/microphone/1.0.0/ios/BusymateMicrophone.swift)
-  or [the Kotlin adapter](https://busymate.ai/sdk/microphone/1.0.0/android/BusymateMicrophone.kt)
+- Download [the Swift adapter](https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.2/BusymateMicrophone.swift)
+  or [the Kotlin adapter 1.0.1](https://github.com/serebano/busymate-ai-sdk-android/releases/download/1.0.2/BusymateMicrophone.kt)
   and include it in your app target. The source files contain the bridge implementation.
 - Use the chat URL generated for your tenant. The examples use
   `https://YOUR_ASSISTANT.busymate.ai`; replace it with your actual chat origin
