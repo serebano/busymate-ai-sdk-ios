@@ -47,7 +47,7 @@ This repository and its releases are the only source of the adapter. busymate.ai
 
 ## Versions and ownership
 
-Platform distribution 1.0.2 is distinct from identity wire 2/build 2.0.0 and microphone wire 1/adapter 1.0.0. [Release manifest](release-manifest.json) pins unchanged source hashes. This repository is canonical for iOS SDK releases. Official rendered developer documentation is hosted on [busymate.ai](https://busymate.ai/docs/guides/mobile-in-app-support). Frozen web/shared contracts remain owned by the hosted product; do not modify old native source bytes.
+Platform distribution 1.0.2 is distinct from identity wire 2/build 2.0.0 and microphone wire 1/adapter 1.0.0. [Release manifest](release-manifest.json) pins unchanged source hashes. This repository is canonical for iOS SDK releases. Official rendered developer documentation is hosted on [busymate.ai](https://busymate.ai/docs/guides/mobile-in-app-support?utm_source=github&utm_medium=readme&utm_campaign=busymate-ai-sdk-ios). Frozen web/shared contracts remain owned by the hosted product; do not modify old native source bytes.
 
 Run `bash scripts/check-ios.sh` on an Xcode-equipped macOS host. This builds the package for iOS Simulator and typechecks the consumer sample. It does not certify physical OS permission dialogs, app-store publication or your backend integration. See [changelog](CHANGELOG.md) and [v2 wire contract](CONTRACT-v2.md).
 
