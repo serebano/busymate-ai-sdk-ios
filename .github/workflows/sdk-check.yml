@@ -25,6 +25,19 @@ jobs:
       - uses: actions/checkout@v4
       - name: No GitHub-hosted runners (runs-on lint)
         run: python3 .github/runs-on-lint.py
+      - name: Runner already sandboxed - turn off SwiftPM's nested manifest/plugin sandbox
+        # The Mac runner runs every job inside sandbox-exec (busymate-devtools infra/mac-runner), and macOS refuses a
+        # nested sandbox_apply, so SwiftPM's own manifest sandbox fails. Shims on PATH add the opt-outs (verified under
+        # the runner's sandbox profile on the Mac: package build, unit tests and the example's tests pass).
+        run: |
+          shim="$RUNNER_TEMP/spm-shims"; mkdir -p "$shim"
+          swift_bin=$(command -v swift); xcb_bin=$(command -v xcodebuild)
+          printf '#!/bin/bash\ncase "$1" in build|test|run|resolve|package) sub=$1; shift; exec "%s" "$sub" --disable-sandbox "$@";; esac\nexec "%s" "$@"\n' "$swift_bin" "$swift_bin" > "$shim/swift"
+          printf '#!/bin/bash\nexec "%s" -IDEPackageSupportDisableManifestSandbox=YES -IDEPackageSupportDisablePluginExecutionSandbox=YES -packageCachePath \"$RUNNER_TEMP/spm-cache\" "$@"\n' "$xcb_bin" > "$shim/xcodebuild"
+          chmod +x "$shim/swift" "$shim/xcodebuild"
+          echo "$shim" >> "$GITHUB_PATH"
+          # Xcode's SwiftPM ignores $HOME: point its caches (and the manifest module cache) into this runner's dir.
+          { echo "CFFIXED_USER_HOME=$HOME"; echo "SWIFTPM_MODULECACHE_OVERRIDE=$CLANG_MODULE_CACHE_PATH"; } >> "$GITHUB_ENV"
       - name: Require the declared native-chat live revision before permission acceptance
         if: github.event_name == 'workflow_dispatch' && (inputs.hosted_commit != '' || inputs.hosted_build != '')
         env:
