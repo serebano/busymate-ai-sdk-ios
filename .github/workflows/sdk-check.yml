@@ -21,6 +21,9 @@ jobs:
     # The Mac runner (bm-mac-busymate-ai-sdk-*, sandboxed launchd agent, Xcode 26); never GitHub-hosted
     # (owner order 2026-11-04).
     runs-on: [self-hosted, macOS, bm-mac]
+    # The job timeout includes the wait for the shared Mac's one-job lock; the simulator step has its own cap
+    # so a hung UI test never holds the Mac for long.
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
       - name: No GitHub-hosted runners (runs-on lint)
@@ -51,6 +54,7 @@ jobs:
       - name: Test configuration and backend reply boundaries
         run: bash example-app/scripts/test-config.sh
       - name: Run actual demo on an isolated iOS Simulator
+        timeout-minutes: 15
         if: github.event_name != 'workflow_dispatch' || (inputs.hosted_commit == '' && inputs.hosted_build == '')
         run: bash example-app/scripts/test-runtime.sh
       - uses: actions/upload-artifact@v4
