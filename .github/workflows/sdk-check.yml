@@ -14,13 +14,38 @@ on:
         description: 'Matching verified live build number; enables real OS grant/deny acceptance'
         required: false
         type: string
+      simulator_smoke:
+        description: 'Run the iOS Simulator runtime smoke (manual only for now, see the job comment)'
+        required: false
+        type: boolean
+        default: false
 permissions:
   contents: read
 jobs:
   sdk-check:
-    runs-on: macos-15
+    # The Mac runner (bm-mac-busymate-ai-sdk-*, sandboxed launchd agent, Xcode 26); never GitHub-hosted
+    # (owner order 2026-11-04).
+    runs-on: [self-hosted, macOS, bm-mac]
+    # The job timeout includes the wait for the shared Mac's one-job lock; the simulator step has its own cap
+    # so a hung UI test never holds the Mac for long.
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
+      - name: No GitHub-hosted runners (runs-on lint)
+        run: python3 .github/runs-on-lint.py
+      - name: Runner already sandboxed - turn off SwiftPM's nested manifest/plugin sandbox
+        # The Mac runner runs every job inside sandbox-exec (busymate-devtools infra/mac-runner), and macOS refuses a
+        # nested sandbox_apply, so SwiftPM's own manifest sandbox fails. Shims on PATH add the opt-outs (verified under
+        # the runner's sandbox profile on the Mac: package build, unit tests and the example's tests pass).
+        run: |
+          shim="$RUNNER_TEMP/spm-shims"; mkdir -p "$shim"
+          swift_bin=$(command -v swift); xcb_bin=$(command -v xcodebuild)
+          printf '#!/bin/bash\ncase "$1" in build|test|run|resolve|package) sub=$1; shift; exec "%s" "$sub" --disable-sandbox "$@";; esac\nexec "%s" "$@"\n' "$swift_bin" "$swift_bin" > "$shim/swift"
+          printf '#!/bin/bash\nexec "%s" -IDEPackageSupportDisableManifestSandbox=YES -IDEPackageSupportDisablePluginExecutionSandbox=YES -packageCachePath \"$RUNNER_TEMP/spm-cache\" "$@"\n' "$xcb_bin" > "$shim/xcodebuild"
+          chmod +x "$shim/swift" "$shim/xcodebuild"
+          echo "$shim" >> "$GITHUB_PATH"
+          # Xcode's SwiftPM ignores $HOME: point its caches (and the manifest module cache) into this runner's dir.
+          { echo "CFFIXED_USER_HOME=$HOME"; echo "SWIFTPM_MODULECACHE_OVERRIDE=$CLANG_MODULE_CACHE_PATH"; } >> "$GITHUB_ENV"
       - name: Require the declared native-chat live revision before permission acceptance
         if: github.event_name == 'workflow_dispatch' && (inputs.hosted_commit != '' || inputs.hosted_build != '')
         env:
@@ -33,11 +58,15 @@ jobs:
         run: bash example-app/scripts/build.sh
       - name: Test configuration and backend reply boundaries
         run: bash example-app/scripts/test-config.sh
+      # MANUAL ONLY (2026-11-04): on the Mac runner (Xcode 26.6, iOS 26.5 simulator) this UI smoke hung for 41 min
+      # after the background/foreground step (run 41816217004) and held the shared Mac. Until that is reproduced
+      # and fixed it runs only from Actions -> SDK checks -> Run workflow with simulator_smoke checked.
       - name: Run actual demo on an isolated iOS Simulator
-        if: github.event_name != 'workflow_dispatch' || (inputs.hosted_commit == '' && inputs.hosted_build == '')
+        timeout-minutes: 15
+        if: github.event_name == 'workflow_dispatch' && inputs.simulator_smoke && inputs.hosted_commit == '' && inputs.hosted_build == ''
         run: bash example-app/scripts/test-runtime.sh
       - uses: actions/upload-artifact@v4
-        if: always() && (github.event_name != 'workflow_dispatch' || (inputs.hosted_commit == '' && inputs.hosted_build == ''))
+        if: always() && (github.event_name == 'workflow_dispatch' && inputs.simulator_smoke && inputs.hosted_commit == '' && inputs.hosted_build == '')
         with:
           name: ios-native-runtime-results
           include-hidden-files: true
