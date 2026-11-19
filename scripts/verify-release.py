@@ -6,7 +6,7 @@ for name,expected in m['files'].items():
     actual=hashlib.sha256((root/name).read_bytes()).hexdigest()
     assert actual==expected, f"Frozen source changed: {name}"
     print(f"verified {name} {actual}")
-assert m['version']=='1.0.3'
+assert m['version']=='1.0.4'
 
 # Every release attaches each adapter source file under its basename, listed in SHA256SUMS.
 assets=m.get('adapterAssets') or []

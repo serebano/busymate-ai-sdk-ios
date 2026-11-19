@@ -9,13 +9,13 @@ final class DemoConfigurationTests: XCTestCase {
     func testDefaultLoadsRealGuestChatAndExactOrigin() throws {
         let config = DemoConfiguration()
         let valid = try config.validated()
-        XCTAssertEqual(valid.chatURL.absoluteString, "https://busymate.ai/support/demos?channel=ios")
+        XCTAssertEqual(valid.chatURL.absoluteString, "https://busymate.ai/chat/w/demos?channel=ios")
         XCTAssertEqual(valid.origins, ["https://busymate.ai"])
         XCTAssertFalse(config.signedIn)
         XCTAssertNil(valid.backendURL)
     }
     func testInsecureChatAndEmbeddedCredentialsAreRefused() {
-        for url in ["http://busymate.ai/support/busyproxy", "https://user:password@busymate.ai/support/busyproxy"] {
+        for url in ["http://busymate.ai/chat/w/busyproxy", "https://user:password@busymate.ai/chat/w/busyproxy"] {
             var config = DemoConfiguration(); config.chatURL = url
             XCTAssertThrowsError(try config.validated())
         }
