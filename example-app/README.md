@@ -39,8 +39,8 @@ on a physical device.
 ## Try the live guest flow
 
 The default URL is the real hosted chat:
-`https://busymate.ai/support/busyproxy?channel=ios`.
-The assistant slug is `busyproxy`, and the explicit extra origin is
+`https://busymate.ai/support/demos?channel=ios`.
+The assistant slug is `demos` (the public demo workspace), and the explicit extra origin is
 `https://busymate.ai`. This is a guest support assistant, not an authenticated
 example workspace or a local stub. Its availability, knowledge and enabled
 hosted features belong to that tenant and deployment.

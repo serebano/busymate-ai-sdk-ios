@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plist version="1.0"><dict>
 <key>NSMicrophoneUsageDescription</key><string>Use the microphone to speak to our support assistant.</string>
+<key>NSCameraUsageDescription</key><string>Take a photo to send to the support assistant.</string>
+<key>NSPhotoLibraryUsageDescription</key><string>Choose a photo to send to the support assistant.</string>
 </dict></plist>

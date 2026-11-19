@@ -9,7 +9,7 @@ final class DemoConfigurationTests: XCTestCase {
     func testDefaultLoadsRealGuestChatAndExactOrigin() throws {
         let config = DemoConfiguration()
         let valid = try config.validated()
-        XCTAssertEqual(valid.chatURL.absoluteString, "https://busymate.ai/support/busyproxy?channel=ios")
+        XCTAssertEqual(valid.chatURL.absoluteString, "https://busymate.ai/support/demos?channel=ios")
         XCTAssertEqual(valid.origins, ["https://busymate.ai"])
         XCTAssertFalse(config.signedIn)
         XCTAssertNil(valid.backendURL)

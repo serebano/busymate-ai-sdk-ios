@@ -17,6 +17,24 @@ V1 configuration: iOS initializer takes `webView`, `identityProvider`, optional 
 
 Microphone registration: iOS `BusymateMicrophone`; Android `BusymateMicrophone`. Request type `busymate.microphone.v1.request`, source `dictation` or `voice`, correlated `id`; reply has the same `id` and a boolean `granted`. See [microphone integration](microphone.md) for denial, retry, Settings and cancellation behavior.
 
+## Attachments (the + button)
+
+Visitors can attach images and PDFs in every Busymate chat. The chat uses a standard `<input type="file">`, and WKWebView answers it by itself: tapping + shows WebKit's menu (**Photo Library**, **Take Photo**, **Choose Files**). No `WKUIDelegate` code is needed.
+
+| Menu item | What your app needs |
+|---|---|
+| Photo Library | Nothing (the system photo picker runs out of process; no photo permission prompt). |
+| Choose Files | Nothing (the system document picker). |
+| Take Photo | **`NSCameraUsageDescription` in Info.plist.** Without it iOS terminates the app the moment the user picks Take Photo (verified on a physical iPhone, 2026-11-19). WebKit has no API to hide that item. |
+
+Add the key (localized) to every app that shows the chat, next to `NSMicrophoneUsageDescription`:
+
+```xml
+<key>NSCameraUsageDescription</key><string>Take a photo to send to support.</string>
+```
+
+`BusymateMicrophone` calls `BusymateFiles.checkHost()` when it is installed and logs one `fault` (subsystem `ai.busymate.sdk`, category `files`) if the key is missing; call `BusymateFiles.checkHost()` yourself, or assert `BusymateFiles.missingUsageDescriptions().isEmpty` in a test, if you do not use the microphone adapter. The chat must be presented from a view controller in a window (a WKWebView inside a SwiftUI view or UIKit hierarchy is fine) so WebKit can present the menu.
+
 ## iOS-specific APIs
 
 `authCallbackScheme`: optional custom scheme used by `ASWebAuthenticationSession` for auth-mode URL opens; register that scheme in your app URL types and follow your app OAuth flow. Without it the SDK opens HTTPS externally. The authentication presentation anchor is the WebView window.

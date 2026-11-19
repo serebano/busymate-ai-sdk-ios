@@ -1,8 +1,9 @@
 import AVFoundation
 import WebKit
 
-/// Optional add-on to either identity bridge. Install before the first load.
+/// Optional add-on to either identity bridge (microphone adapter 1.0.1). Install before the first load.
 /// Keep this instance alive and route WKUIDelegate media requests to allowMedia.
+/// Also runs `BusymateFiles.checkHost()` (the chat's attach menu needs NSCameraUsageDescription).
 @available(iOS 15.0, *)
 public final class BusymateMicrophone: NSObject, WKScriptMessageHandlerWithReply {
     private let origins: Set<String>
@@ -18,6 +19,7 @@ public final class BusymateMicrophone: NSObject, WKScriptMessageHandlerWithReply
             return "https://\(url.host!.lowercased())\(port)"
         })
         super.init()
+        BusymateFiles.checkHost()
         webView.configuration.userContentController.addScriptMessageHandler(
             self, contentWorld: .page, name: "BusymateMicrophone")
     }
