@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+Attachments (visitor images and PDFs went live in every workspace chat on 2026-11-19). WKWebView handles the chat's attach (+) button by itself, verified on a physical iPhone SE: + opens Photo Library / Take Photo / Choose Files. But **Take Photo terminates an app without `NSCameraUsageDescription`** (the example app had only the microphone key and crashed). New `BusymateFiles.swift` (files check 1.0.0): `missingUsageDescriptions()` / `checkHost()`, which logs one fault when the key is missing; microphone adapter 1.0.1 (wire 1 unchanged) runs it at install. Example app and `Examples/Info.plist` declare `NSCameraUsageDescription` and `NSPhotoLibraryUsageDescription`; docs gain "Attachments (the + button)". The example app now defaults to the public `demos` workspace. Identity v1/v2 bytes unchanged.
+
 ## 1.0.2
 
 Release packaging: the microphone adapter source (`BusymateMicrophone.swift`, adapter 1.0.0, wire 1, sha256 `a99ae81eb1ac2bf75d268724e94120e3953eb793a10321f16430d5c6594859a8`) is attached to every GitHub release and listed in `SHA256SUMS`; docs link the release, not busymate.ai. No SDK code change; native source hashes are unchanged. Versions 1.0.0 and 1.0.1 stay immutable. (refs serebano/busymate-ai-src#2156)

@@ -1,8 +1,8 @@
 import Foundation
 
 struct DemoConfiguration {
-    var assistant = "busyproxy"
-    var chatURL = "https://busymate.ai/support/busyproxy?channel=ios"
+    var assistant = "demos"
+    var chatURL = "https://busymate.ai/support/demos?channel=ios"
     var origins = "https://busymate.ai"
     var signedIn = false
     var accountID = ""
