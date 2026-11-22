@@ -1,6 +1,6 @@
 {
   "sdk": "Busymate AI ios",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "identityWire": {
     "legacy": 1,
     "v2": 2,
@@ -12,11 +12,14 @@
     "Sources/BusymateAI/BusymateAI.swift": "2b8887aa1d6369e7e948e3040d153dd0d2cc8e5deee65016b06b2bf13b0ec98c",
     "Sources/BusymateAI/BusymateMicrophone.swift": "d14bbd1570ed63e0070eb89d2537b0c08d0112f85ea88e841944890e90deefa7",
     "Sources/BusymateAI/BusymateBridge.swift": "ad538ce1f0a51140a5d7a5e100c27703d3f9595cdbb6164f15f8f615dd461ba9",
-    "Sources/BusymateAI/BusymateFiles.swift": "070c38efec65dc59294fab9c1519a97ef769ce24aec2cdc47458d8399f094202"
+    "Sources/BusymateAI/BusymateFiles.swift": "070c38efec65dc59294fab9c1519a97ef769ce24aec2cdc47458d8399f094202",
+    "Sources/BusymateAI/BusymateLaunch.swift": "c370834eb358abc427d854985ce7f960b83804d84c9ff09a12809ea49e521d7b"
   },
   "adapterAssets": [
     "Sources/BusymateAI/BusymateMicrophone.swift",
-    "Sources/BusymateAI/BusymateFiles.swift"
+    "Sources/BusymateAI/BusymateFiles.swift",
+    "Sources/BusymateAI/BusymateLaunch.swift"
   ],
-  "filesCheck": "1.0.0"
+  "filesCheck": "1.0.0",
+  "launchParameters": "1.0.0"
 }

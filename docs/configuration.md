@@ -35,6 +35,10 @@ Add the key (localized) to every app that shows the chat, next to `NSMicrophoneU
 
 `BusymateMicrophone` calls `BusymateFiles.checkHost()` when it is installed and logs one `fault` (subsystem `ai.busymate.sdk`, category `files`) if the key is missing; call `BusymateFiles.checkHost()` yourself, or assert `BusymateFiles.missingUsageDescriptions().isEmpty` in a test, if you do not use the microphone adapter. The chat must be presented from a view controller in a window (a WKWebView inside a SwiftUI view or UIKit hierarchy is fine) so WebKit can present the menu.
 
+## Launch parameters
+
+`BusymateLaunch.chatURL(_:)` returns the chat address with two extra query items: `sdkVersion` (this SDK's release, e.g. `1.0.5`) and `hostAppId` (your bundle identifier; left out unless it matches `^[A-Za-z][A-Za-z0-9._-]{1,127}$`). The hosted page reads them once from its own URL to label the chat's analytics events by SDK release and host app. No request, permission or stored identifier is added; your own query items (`channel=ios`) are kept. Pass `hostAppId:` to override the bundle identifier.
+
 ## iOS-specific APIs
 
 `authCallbackScheme`: optional custom scheme used by `ASWebAuthenticationSession` for auth-mode URL opens; register that scheme in your app URL types and follow your app OAuth flow. Without it the SDK opens HTTPS externally. The authentication presentation anchor is the WebView window.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5
+
+Launch parameters. New `BusymateLaunch.swift` (launch 1.0.0): `BusymateLaunch.chatURL(_:)` appends `sdkVersion=<this SDK's version>` and `hostAppId=<your bundle id>` (only when it matches `^[A-Za-z][A-Za-z0-9._-]{1,127}$`) to the chat address you load, so the workspace's Insights can show which SDK release, in which app, a chat ran in. Your own query items (`channel=ios`) are kept. No new request, permission or stored id. Wrap the URL you load: `webView.load(URLRequest(url: BusymateLaunch.chatURL(chatURL)))`; the example app and `Examples/ChatViewController.swift` do. Identity v1/v2 and microphone/files sources are unchanged. Version 1.0.4 stays immutable.
+
 ## 1.0.4
 
 Chat address: the hosted chat's frame address is now `https://busymate.ai/chat/w/<assistant>` (busymate-ai-src#6079: no `/support` URLs). The example app defaults to `https://busymate.ai/chat/w/demos?channel=ios` and the README names the new address. `/support/<assistant>` keeps working forever as a silent alias, so apps built on 1.0.3 and older need no change. No SDK source bytes changed (identity v1/v2, microphone adapter and files check identical to 1.0.3).

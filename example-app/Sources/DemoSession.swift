@@ -68,7 +68,7 @@ final class DemoSession: NSObject, ObservableObject, WKUIDelegate, WKNavigationD
             installed = true
             status = applied.signedIn ? "Identified mode requires authenticated backend" : "Guest chat"
             log("Installed identity v2; native microphone \(applied.microphoneEnabled ? "enabled" : "disabled")")
-            webView.load(URLRequest(url: valid.chatURL))
+            webView.load(URLRequest(url: BusymateLaunch.chatURL(valid.chatURL)))
             selectedTab = 0
         } catch {
             validationError = error.localizedDescription

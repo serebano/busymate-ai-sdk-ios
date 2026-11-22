@@ -1,12 +1,15 @@
 from pathlib import Path
-import hashlib,json
+import hashlib,json,re
 root=Path(__file__).resolve().parents[1]
 m=json.loads((root/'release-manifest.json').read_text())
 for name,expected in m['files'].items():
     actual=hashlib.sha256((root/name).read_bytes()).hexdigest()
     assert actual==expected, f"Frozen source changed: {name}"
     print(f"verified {name} {actual}")
-assert m['version']=='1.0.4'
+# The SDK's own version constant (BusymateLaunch.sdkVersion) must equal the manifest: one source, no drift.
+launch=(root/'Sources/BusymateAI/BusymateLaunch.swift').read_text()
+const=re.search(r'static let sdkVersion = "([^"]+)"',launch)
+assert const and const.group(1)==m['version'], 'BusymateLaunch.sdkVersion must equal release-manifest.json version'
 
 # Every release attaches each adapter source file under its basename, listed in SHA256SUMS.
 assets=m.get('adapterAssets') or []
