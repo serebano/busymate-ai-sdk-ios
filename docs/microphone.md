@@ -12,8 +12,8 @@ immediately; a previous refusal can require the user to change app Settings.
 `BusymateMicrophone.swift` (microphone adapter 1.0.1, wire 1; it also runs `BusymateFiles.swift`, the attach-menu Info.plist check) ships in this SDK and is attached to every GitHub release, with `SHA256SUMS`:
 
 - Latest release: https://github.com/serebano/busymate-ai-sdk-ios/releases/latest/download/BusymateMicrophone.swift
-- Pinned, SDK 1.0.4: https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.4/BusymateMicrophone.swift (needs https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.4/BusymateFiles.swift next to it)
-- Checksums: https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.4/SHA256SUMS (`shasum -a 256 -c SHA256SUMS --ignore-missing`)
+- Pinned, SDK 1.0.5: https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.5/BusymateMicrophone.swift (needs https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.5/BusymateFiles.swift next to it)
+- Checksums: https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.5/SHA256SUMS (`shasum -a 256 -c SHA256SUMS --ignore-missing`)
 
 This repository and its releases are the only source of the adapter. busymate.ai no longer publishes adapter copies; its legacy `https://busymate.ai/sdk/microphone/1.0.0/` files stay frozen for existing integrations.
 
@@ -21,7 +21,7 @@ This repository and its releases are the only source of the adapter. busymate.ai
 
 - Keep your existing identity bridge and authentication flow. This optional
   adapter works with either identity bridge; the immutable kit v2 files stay unchanged.
-- Download [the Swift adapter](https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.4/BusymateMicrophone.swift)
+- Download [the Swift adapter](https://github.com/serebano/busymate-ai-sdk-ios/releases/download/1.0.5/BusymateMicrophone.swift)
   or [the Kotlin adapter 1.0.1](https://github.com/serebano/busymate-ai-sdk-android/releases/download/1.0.2/BusymateMicrophone.kt)
   and include it in your app target. The source files contain the bridge implementation.
 - Use the chat URL generated for your tenant. The examples use

@@ -31,7 +31,7 @@ final class ChatViewController: UIViewController, WKUIDelegate, WKNavigationDele
             assistant: assistant, origins: [origin], account: account, mint: mint,
             onClose: { [weak self] in self?.dismiss(animated: true) }))
         microphone = BusymateMicrophone(webView: webView, origins: [origin])
-        webView.load(URLRequest(url: chatURL))
+        webView.load(URLRequest(url: BusymateLaunch.chatURL(chatURL)))
     }
     func webView(_ webView: WKWebView, requestMediaCapturePermissionFor origin: WKSecurityOrigin,
                  initiatedByFrame frame: WKFrameInfo, type: WKMediaCaptureType,
