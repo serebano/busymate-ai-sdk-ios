@@ -1,6 +1,6 @@
 {
   "sdk": "Busymate AI ios",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "identityWire": {
     "legacy": 1,
     "v2": 2,
@@ -13,7 +13,10 @@
     "Sources/BusymateAI/BusymateMicrophone.swift": "d14bbd1570ed63e0070eb89d2537b0c08d0112f85ea88e841944890e90deefa7",
     "Sources/BusymateAI/BusymateBridge.swift": "ad538ce1f0a51140a5d7a5e100c27703d3f9595cdbb6164f15f8f615dd461ba9",
     "Sources/BusymateAI/BusymateFiles.swift": "070c38efec65dc59294fab9c1519a97ef769ce24aec2cdc47458d8399f094202",
-    "Sources/BusymateAI/BusymateLaunch.swift": "c370834eb358abc427d854985ce7f960b83804d84c9ff09a12809ea49e521d7b"
+    "Sources/BusymateAI/BusymateLaunch.swift": "25f89fb900531831bd036108292002fdf987784858ffaf45f2bcb44932e42ec0",
+    "Sources/BusymateAI/Busymate.swift": "3f6bcb8d2a8e89f36a62be64b8e42e75be2904060aa84c6b26461c300b8cab05",
+    "Sources/BusymateAI/BusymateUnread.swift": "f5de4fea7f4fc1ff0e748b3197fd708f74da0a9270c144ef160304b9d83c1d64",
+    "Sources/BusymateAI/BusymateUnreadUI.swift": "a95ae3d88c67ef9f24a34b5be00ee07c94878c6d8b7fd2f1d6bde673376396c0"
   },
   "adapterAssets": [
     "Sources/BusymateAI/BusymateMicrophone.swift",
@@ -21,5 +24,6 @@
     "Sources/BusymateAI/BusymateLaunch.swift"
   ],
   "filesCheck": "1.0.0",
-  "launchParameters": "1.0.0"
+  "launchParameters": "1.0.0",
+  "unread": "1.0.0"
 }

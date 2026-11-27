@@ -51,6 +51,22 @@ to that tap. The host forwards WebKit's separate microphone decision. Test real
 permission acceptance/refusal on your device; simulator compilation does not
 prove audio routing or an OS dialog.
 
+## Unread follow-ups: launcher badge and bubble
+
+The **Home** tab stands for your app's main screen with the chat closed. It shows the SDK's
+`BusymateLauncher` (round button, count badge, follow-up bubble) and the live
+`Busymate.shared.currentUnread` value; the **Chat** tab item carries the same count.
+The demo calls `Busymate.shared.configure`, `attach(to:)` before the load, sets
+`onOpenChat` to switch to the Chat tab, and calls `chatDidClose()` when you leave it.
+
+To see it end to end: open **Chat** once (the page hands the app its visitor token),
+go to **Home**, have a follow-up sent to that conversation, then bring the app back
+to the foreground. The badge and the bubble appear; a tap opens the chat at the
+message, ✕ closes only the bubble (the badge stays: the message is still unread).
+**Settings → Post a sample unread event from the chat page** sends one sample
+`support.chat.v1.unread` through the real channel; it is a sample, not a message.
+**Forget this visitor** calls `Busymate.shared.reset()`.
+
 ## Settings and actual SDK controls
 
 Change controls under **Settings**, then **Apply and open chat**. Applying

@@ -37,7 +37,11 @@ Add the key (localized) to every app that shows the chat, next to `NSMicrophoneU
 
 ## Launch parameters
 
-`BusymateLaunch.chatURL(_:)` returns the chat address with two extra query items: `sdkVersion` (this SDK's release, e.g. `1.0.5`) and `hostAppId` (your bundle identifier; left out unless it matches `^[A-Za-z][A-Za-z0-9._-]{1,127}$`). The hosted page reads them once from its own URL to label the chat's analytics events by SDK release and host app. No request, permission or stored identifier is added; your own query items (`channel=ios`) are kept. Pass `hostAppId:` to override the bundle identifier.
+`BusymateLaunch.chatURL(_:)` returns the chat address with two extra query items: `sdkVersion` (this SDK's release, e.g. `1.0.6`) and `hostAppId` (your bundle identifier; left out unless it matches `^[A-Za-z][A-Za-z0-9._-]{1,127}$`). The hosted page reads them once from its own URL to label the chat's analytics events by SDK release and host app. No request, permission or stored identifier is added; your own query items (`channel=ios`) are kept. Pass `hostAppId:` to override the bundle identifier.
+
+## Unread follow-ups
+
+`Busymate.shared.configure(.init(assistant:chatURL:origins:))`, `attach(to:)` and the built-in launcher show a badge and a follow-up bubble in your app, also while the chat is closed. Settings, API, security and the integration check: [unread follow-ups](unread.md).
 
 ## iOS-specific APIs
 

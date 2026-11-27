@@ -4,9 +4,12 @@ import SwiftUI
 import WebKit
 
 @MainActor
-final class DemoSession: NSObject, ObservableObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler {
+final class DemoSession: NSObject, ObservableObject, WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler, BusymateDelegate {
     @Published var configuration = DemoConfiguration()
-    @Published var selectedTab = 0
+    @Published var selectedTab = 0 {
+        // Leaving the Chat tab is this demo's "chat closed": the SDK asks the server what is still unread.
+        didSet { if oldValue == 0 && selectedTab != 0 { Busymate.shared.chatDidClose() } }
+    }
     @Published var events: [String] = []
     @Published var status = "Ready — guest chat"
     @Published var validationError: String?
@@ -65,6 +68,11 @@ final class DemoSession: NSObject, ObservableObject, WKUIDelegate, WKNavigationD
             if applied.microphoneEnabled {
                 microphone = BusymateMicrophone(webView: webView, origins: Set(valid.origins))
             }
+            // Unread follow-ups: the channel is installed before the load; the launcher on Home opens this tab.
+            Busymate.shared.delegate = self
+            Busymate.shared.onOpenChat = { [weak self] in self?.selectedTab = 0 }
+            Busymate.shared.configure(.init(assistant: valid.assistant, chatURL: valid.chatURL, origins: valid.origins))
+            Busymate.shared.attach(to: webView)
             installed = true
             status = applied.signedIn ? "Identified mode requires authenticated backend" : "Guest chat"
             log("Installed identity v2; native microphone \(applied.microphoneEnabled ? "enabled" : "disabled")")
@@ -75,6 +83,21 @@ final class DemoSession: NSObject, ObservableObject, WKUIDelegate, WKNavigationD
             log("Configuration rejected")
         }
     }
+    /// Integration check: the real chat page posts one sample unread event through the real channel
+    /// (origin and schema checks included). A constant script; nothing typed is spliced in.
+    func postSampleUnread() {
+        let script = "window.webkit.messageHandlers.busymate.postMessage({type:'support.chat.v1.unread',n:1,"
+            + "t:'Still thinking it over? I can help you pick.',at:new Date().toISOString()});true;"
+        webView.evaluateJavaScript(script, in: nil, in: .page) { [weak self] result in
+            if case .failure = result { self?.log("Sample unread: the chat page is not loaded") } else {
+                self?.log("Sample unread posted by the chat page"); self?.selectedTab = 3
+            }
+        }
+    }
+    func busymateDidUpdateUnread(_ unread: BusymateUnread) {
+        log("Unread: \(unread.count) (message text omitted)")
+    }
+    func busymateDidRequestChat() { log("Launcher tapped: open chat at the conversation") }
     private func validCloseCallback() -> (() -> Void)? {
         DemoCallbacks.close(enabled: applied.closeCallbackEnabled) { [weak self] in
             self?.log("SDK close fallback"); self?.closeChat()

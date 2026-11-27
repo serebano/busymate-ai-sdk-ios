@@ -1,3 +1,4 @@
+import BusymateAI
 import SwiftUI
 import WebKit
 
@@ -15,10 +16,46 @@ struct ChatWebView: UIViewRepresentable {
     func updateUIView(_ view: WKWebView, context: Context) {}
 }
 
+/// Stands for YOUR app's main screen: the chat is closed here, and the SDK's launcher shows the
+/// unread badge and the follow-up bubble. A tap on either opens the Chat tab at the conversation.
+struct DemoHomeView: View {
+    @ObservedObject var session: DemoSession
+    @ObservedObject private var busymate = Busymate.shared
+    var body: some View {
+        List {
+            Section {
+                Text("This screen stands for your app. The chat is closed. When the assistant follows up, the launcher in the corner gets a badge and a message bubble, also after the app was in the background.")
+                    .font(.subheadline)
+            }
+            Section("Unread from the SDK") {
+                HStack {
+                    Text("Busymate.shared.unread")
+                    Spacer()
+                    Text(busymate.currentUnread.count == 0 ? "none" : "\(busymate.currentUnread.count)")
+                        .foregroundColor(.secondary).monospacedDigit()
+                        .accessibilityIdentifier("unread-count")
+                }
+                Button("Refresh now") { Busymate.refreshUnread(); session.log("refreshUnread() requested") }
+                Button("Forget this visitor", role: .destructive) { Busymate.shared.reset(); session.log("Visitor token deleted (reset)") }
+            }
+            Section {
+                Text("Open Chat once so the chat can hand the app its visitor token (kept in the Keychain). Close the bubble with ✕: the badge stays, because the message is still unread.")
+                    .font(.caption).foregroundColor(.secondary)
+            }
+        }
+        .navigationTitle("Your app")
+        .busymateLauncher(title: "Support")
+    }
+}
+
 struct DemoRootView: View {
     @ObservedObject var session: DemoSession
+    @ObservedObject private var busymate = Busymate.shared
     var body: some View {
         TabView(selection: $session.selectedTab) {
+            NavigationView { DemoHomeView(session: session) }
+                .navigationViewStyle(.stack)
+                .tabItem { Label("Home", systemImage: "house") }.tag(3)
             NavigationView {
                 VStack(spacing: 0) {
                     Text(session.status).font(.caption).foregroundColor(.secondary).padding(6)
@@ -28,6 +65,7 @@ struct DemoRootView: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar { Button("Reload") { session.reload() } }
             }.tabItem { Label("Chat", systemImage: "bubble.left.and.bubble.right") }.tag(0)
+             .badge(busymate.currentUnread.count)
             NavigationView {
                 Form {
                     Section("Hosted chat") {
@@ -59,6 +97,8 @@ struct DemoRootView: View {
                     Section("Lifecycle and diagnostics") {
                         Button("Invoke renderer recovery forwarding") { session.testRestoreForwarding() }
                         Text("Foreground resume is emitted automatically by the SDK. Recovery invokes the actual SDK method; it does not manufacture a renderer crash.").font(.caption)
+                        Button("Post a sample unread event from the chat page") { session.postSampleUnread() }
+                        Text("Integration check: the loaded chat page posts one sample support.chat.v1.unread through the real channel (window.webkit.messageHandlers.busymate), so you can see the launcher badge and bubble on Home. It is a sample, not a message; the next answer from the server replaces it.").font(.caption)
                         Button("Apply and open chat") { session.apply() }.font(.headline)
                         Button("Reset to guest defaults") { session.reset() }
                         if let error = session.validationError { Text(error).foregroundColor(.red) }

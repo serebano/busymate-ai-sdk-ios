@@ -14,7 +14,7 @@ import Foundation
 /// Your own query items (for example `channel=ios`) are kept as they are.
 public enum BusymateLaunch {
     /// The SDK release (`release-manifest.json` `version`; `scripts/verify-release.py` refuses a mismatch).
-    public static let sdkVersion = "1.0.5"
+    public static let sdkVersion = "1.0.6"
 
     /// Digits, letters, `.`, `+`, `-`, at most 32 characters.
     public static func isValidSDKVersion(_ value: String) -> Bool {
