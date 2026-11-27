@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.6
+
+Unread follow-ups in your app: a channel between the chat web view and the app, a launcher badge and a follow-up bubble (unread 1.0.0). New `Busymate.swift`, `BusymateUnread.swift`, `BusymateUnreadUI.swift`.
+
+- **Channel.** `Busymate.shared.attach(to: webView)` registers the `WKScriptMessageHandler` `busymate`. The chat page posts `support.chat.v1.unread {n, t, at}` and `support.chat.v1.identity {v}`; the app sends `support.chat.v1.open` when the person taps the launcher or the bubble. Only frames on Busymate's chat origins for your assistant (plus exact https origins you list) are heard; every message is schema-checked and unknown types are dropped.
+- **Works with the chat closed.** The visitor token is kept in the Keychain (this device only, never logged). `Busymate.refreshUnread()` asks `POST /api/chat/unread`; it runs by itself on `configure`, on every return to the foreground and after `chatDidClose()`.
+- **API.** `Busymate.shared.unread` (`AsyncStream`), `.unreadPublisher` (Combine), `BusymateDelegate.busymateDidUpdateUnread(_:)`, value `BusymateUnread { count, preview, at }`.
+- **Built-in UI** (SwiftUI and UIKit; tint colour, light/dark, Dynamic Type, Reduce Motion, VoiceOver): `BusymateLauncherButton` with a count badge, `BusymateTeaserBubble` (tap opens the chat at the message; ✕ closes the bubble and leaves the message unread), `BusymateLauncher` / `.busymateLauncher()`; UIKit `BusymateLauncherButtonView`, `BusymateTeaserBubbleView`, `BusymateLauncherView`.
+- Example app: a **Home** tab with the launcher, badge and bubble; the Chat tab carries the count. Guide: `docs/unread.md`. 23 new host-side tests (channel validation, origins, Keychain token store, request/answers, bubble state).
+- No new permission. Identity v1/v2, microphone adapter and files check bytes are unchanged; `BusymateLaunch.swift` changes only its version constant. Version 1.0.5 stays immutable.
+
 ## 1.0.5
 
 Launch parameters. New `BusymateLaunch.swift` (launch 1.0.0): `BusymateLaunch.chatURL(_:)` appends `sdkVersion=<this SDK's version>` and `hostAppId=<your bundle id>` (only when it matches `^[A-Za-z][A-Za-z0-9._-]{1,127}$`) to the chat address you load, so the workspace's Insights can show which SDK release, in which app, a chat ran in. Your own query items (`channel=ios`) are kept. No new request, permission or stored id. Wrap the URL you load: `webView.load(URLRequest(url: BusymateLaunch.chatURL(chatURL)))`; the example app and `Examples/ChatViewController.swift` do. Identity v1/v2 and microphone/files sources are unchanged. Version 1.0.4 stays immutable.

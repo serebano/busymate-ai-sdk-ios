@@ -31,6 +31,9 @@ final class ChatViewController: UIViewController, WKUIDelegate, WKNavigationDele
             assistant: assistant, origins: [origin], account: account, mint: mint,
             onClose: { [weak self] in self?.dismiss(animated: true) }))
         microphone = BusymateMicrophone(webView: webView, origins: [origin])
+        // Unread follow-ups: the chat ↔ app channel, installed before the first load. At app start call
+        // Busymate.shared.configure(.init(assistant:)) and show BusymateLauncherView() on your main screen.
+        Busymate.shared.attach(to: webView)
         webView.load(URLRequest(url: BusymateLaunch.chatURL(chatURL)))
     }
     func webView(_ webView: WKWebView, requestMediaCapturePermissionFor origin: WKSecurityOrigin,
@@ -46,6 +49,8 @@ final class ChatViewController: UIViewController, WKUIDelegate, WKNavigationDele
     // Call when the host owns disposal; the WebView must no longer be in use.
     func disposeChat() {
         webView.stopLoading()
+        Busymate.shared.detach(from: webView)
+        Busymate.shared.chatDidClose()
         webView.configuration.userContentController.removeScriptMessageHandler(
             forName: "BusymateMicrophone", contentWorld: .page)
         webView.uiDelegate = nil
